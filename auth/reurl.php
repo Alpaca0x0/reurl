@@ -55,7 +55,7 @@ for($i=$tryTimes; $i > 0; $i--) {
 if($i < 1){ Resp::warning('code_not_unique', '生成短網址編碼時發生多次重覆，請稍後再嘗試一次'); }
 
 // write into db
-$ip = $_SERVER["REMOTE_ADDR"];
+$ip = isset($_SERVER['HTTP_X_REMOTE_ADDR']) ? $_SERVER['HTTP_X_REMOTE_ADDR'] : $_SERVER["REMOTE_ADDR"];
 $sql = "INSERT INTO `url` (`code`, `url`, `hash`, `ip`) VALUES(:code, :url, :hash, :ip);";
 DB::query($sql)::execute([
     ':code' => $code,
@@ -64,5 +64,4 @@ DB::query($sql)::execute([
     ':ip' => $ip,
 ]);
 if(DB::error()){ Resp::error('db_insert', [$code, $url, $urlHash, $ip], '資料庫在寫入時發生錯誤'); }
-
 Resp::success('url_created', $code, '短網址成功生成');
