@@ -1,2 +1,3 @@
 /config.php
 /configs/db.php
+/.docker/mysql

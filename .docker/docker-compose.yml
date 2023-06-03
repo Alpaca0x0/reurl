@@ -1,0 +1,40 @@
+version: "3"
+
+services:
+
+  reurl-db:
+    image: mariadb
+    container_name: reurl-db
+    restart: unless-stopped
+    environment:
+      TZ: Asia/Taipei
+      #- MARIADB_USER=user
+      #- MARIADB_PASSWORD=password
+      MARIADB_ROOT_PASSWORD: password
+      MYSQL_DATABASE: reurl
+    volumes:
+      - ./mysql:/var/lib/mysql
+    networks:
+      default:
+        ipv4_address: 172.28.0.2
+
+  reurl-app:
+    image: alpaca/reurl
+    container_name: reurl-app
+    restart: unless-stopped
+    environment:
+      TZ: Asia/Taipei
+    volumes:
+      - ../:/usr/share/nginx/html
+      - ./nginx:/etc/nginx
+      #- ./php:/etc/php
+      - ./entrypoint.sh:/docker-entrypoint.d/reurl-custom.sh
+    networks:
+      default:
+        ipv4_address: 172.28.0.3
+      
+networks:
+  default:
+    name: reurl
+    external: true
+
