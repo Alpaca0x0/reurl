@@ -18,7 +18,7 @@ if(!INIT){ die(MSG_MAINTAIN); }
 if(DEBUG){ ini_set('display_errors',1); error_reporting(E_ALL); } else{ ini_set('display_errors',0); error_reporting(0); }
 # Check libs
 foreach (Libraries as $library) 
-    if(!get_extension_funcs($library))
+	if(!extension_loaded($library))
         if(DEV) die("Library '{$library}' not even be installed.");
 
 /****************************************************************/
