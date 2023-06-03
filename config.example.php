@@ -7,7 +7,7 @@
 
 # Name of project
 # 專案名稱
-define('NAME', 'ReURL');
+define('NAME', '(๑•̀ㅂ•́)و✧ URL 縮起乃');
 
 # Debug mode: show errors
 # 除錯模式：顯示錯誤資訊
@@ -46,6 +46,7 @@ define('MSG_MAINTAIN', 'The website is under maintenance. Please come back later
 # Libraries of php which using on this project
 # 在此專案中所使用的 PHP 函式庫
 define('Libraries', [
+	#'pdo_mysql', // for database
     'gd', // 用於繪製圖像驗證碼
     'pdo', // 資料庫連接使用 pdo
 ]);
@@ -90,6 +91,6 @@ define('Domain', isset($_SERVER['HTTP_X_FORWARDED_HOST']) ? $_SERVER['HTTP_X_FOR
 
 # Protocol
 # 協定
-define('Protocol', isset($_SERVER['HTTPS']) && !empty($_SERVER['HTTPS']) ? 'https' : 'http');
+define('Protocol', isset($_SERVER['HTTP_X_FORWARDED_PROTO']) ? $_SERVER['HTTP_X_FORWARDED_PROTO'] : (!empty($_SERVER['HTTPS']) ? 'https' : 'http'));
 
 
