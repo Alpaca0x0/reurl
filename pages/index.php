@@ -101,16 +101,6 @@
         });
     });
     // 
-    const isUrl = (url) => {
-	  	let urlPattern = new RegExp('^(https?:\\/\\/)?'+ // validate protocol
-	    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // validate domain name
-	    '((\\d{1,3}\\.){3}\\d{1,3}))|'+ // validate OR ip (v4) address
-	    'localhost'+ // localhost
-	    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // validate port and path
-	    '(\\?[;&a-z\\d%_.~+=-]*)?'+ // validate query string
-	    '(\\#[-a-z\\d_]*)?$','i'); // validate fragment locator
-	    return !!urlPattern.test(url);
-	}
     const isSubmitting = (status=null) => {
         if(status === null){ return is.submitting; }
         is.submitting = status;
@@ -120,19 +110,6 @@
         if(isSubmitting()){ return; }
         el.newUrl.innerHTML = '';
         el.message.innerHTML = '生成中... ';
-        // if is not url
-        url = url.trim();
-        if(!isUrl(url)){
-            el.message.innerHTML = '這不是一個有效的 HTTP 網址 (可能忘記於開頭添加 <span class="ts-text is-mark">http(s)://</span>)';
-            el.copyBtn.style.display = 'none';
-            return false;
-        }
-        // if url is current site
-        if(url.startsWith('http://'+domain+root) || url.startsWith('https://'+domain+root)){
-            el.message.innerHTML = '請不要嘗試縮短短網址，不然短網址就會變成短網址中的短網址!@#$%^&*()_+...';
-            el.copyBtn.style.display = 'none';
-            return false;
-        }
         // 
         isSubmitting(true);
         console.log(url);
@@ -172,6 +149,11 @@
             }else{
                 el.message.innerHTML = resp.message;
                 el.copyBtn.style.display = 'none';
+                if(resp.status === 'domain_may_not_exists'){
+                    el.message.innerHTML += '：<span class="ts-text is-heavy is-large is-negative">' + resp.data + '</span>';
+                }else if(resp.status === 'port_out_range'){
+                    el.message.innerHTML += '：<span class="ts-text is-heavy is-large is-negative">' + resp.data + '</span>';
+                }
             }
         }).always((resp) => {
             el.resp.classList.add("animate__pulse");
