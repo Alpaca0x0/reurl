@@ -5,7 +5,7 @@
     <div class="ts-header is-huge is-center-aligned is-heavy"><?=htmlentities(NAME)?></div>
     <div class="ts-space is-big"></div>
 
-    <form id="reurl">
+    <form id="Reurl">
         <div class="ts-row is-compact">
             <div class="column is-fluid">
                 <div class="ts-input is-large is-circular is-fluid is-solid is-start-icon">
@@ -27,23 +27,28 @@
     </form>
     <div class="ts-space"></div>
 
-    <!-- <div class="ts-wrap">
-        <span>熱門話題：</span>
-        <a class="ts-text is-undecorated" href="#!">轉型正義</a>
-        <a class="ts-text is-undecorated" href="#!">比特幣</a>
-        <a class="ts-text is-undecorated" href="#!">空汙法</a>
-        <a class="ts-text is-undecorated" href="#!">公投法</a>
-        <a class="ts-text is-undecorated" href="#!">勞基法</a>
-        <a class="ts-text is-undecorated" href="#!">修法</a>
+    <div class="ts-wrap">
+        <span>相關連結：</span>
+        <a class="ts-text is-undecorated" href="<?=htmlentities(Uri::page('terms/'))?>" target="_blank">
+            <span class="ts-icon is-scroll-icon"></span> 服務條款
+        </a>
+        <a class="ts-text is-undecorated" href="https://github.com/Alpaca0x0/reurl/" target="_blank">
+            <span class="ts-icon is-github-icon"></span> 原始碼
+        </a>
     </div>
-    <div class="ts-space is-big"></div> -->
 
-    <div id="resp" class="ts-snackbar animate__animated animate__faster animate__fadeIn">
+    <div id="Count" class="ts-divider is-section is-center-text">
+        <span class="ts-text is-disabled">
+            本服務累積共縮了 <span id="value"><div class="ts-loading is-small"></div></span> 次網址
+        </span>
+    </div>
+
+    <div id="Resp" class="ts-snackbar animate__animated animate__faster animate__fadeIn">
         <div id="message" class="content">貼上網址後 Enter 即可縮網址！</div>
         <div id="newUrl" class="content"></div>
         <button id="copy" class="action" style="display: none">複製</button>
     </div>
-
+    <div class="ts-space is-large"></div>
 </div>
 
 <style>@import url('<?=Uri::css('animate')?>');</style>
@@ -65,13 +70,17 @@
     let newUrl = "";
     // 
     let el = {};
-    el.form = document.querySelector('form#reurl');
+    el.form = document.querySelector('form#Reurl');
     el.originUrl = el.form.querySelector('input#originUrl');
     el.clear = el.form.querySelector('button#clear');
-    el.resp = document.querySelector('div#resp');
+
+    el.resp = document.querySelector('div#Resp');
     el.message = el.resp.querySelector('div#message');
     el.newUrl = el.resp.querySelector('div#newUrl');
     el.copyBtn = el.resp.querySelector('button#copy');
+
+    el.count = document.querySelector('div#Count');
+    el.countValue = el.count.querySelector('span#value');
     // 
     el.form.addEventListener('submit', event => {
         event.preventDefault();
@@ -80,6 +89,7 @@
     });
     document.addEventListener("DOMContentLoaded", () => {
         setTimeout(function(){ el.resp.classList.remove('animate__fadeIn'); }, 500);
+        getCountTotal();
     });
     el.clear.addEventListener('click', () => { el.originUrl.value = ''; });
     el.copyBtn.addEventListener('click', () => {
@@ -140,6 +150,7 @@
             info.msg = resp.message;
             // 
             if(resp.type==='success'){
+                getCountTotal();
                 newUrl = `${protocol}://${domain}${root}${resp.data}`;
                 el.originUrl.value = '';
                 el.message.innerHTML = "短網址：";
@@ -171,7 +182,26 @@
             });
             setTimeout(function(){ isSubmitting(false); }, 1500);
         });
-    }
+    };
+    // counter
+    const getCountTotal = () => {
+        $.ajax({
+            type: "GET",
+            url: '<?=htmlentities(Uri::api('count/'))?>',
+            dataType: 'json',
+        }).fail((xhr, status, error) => {
+            console.error(xhr.responseText);
+        }).done((resp) => {
+            console.log(resp);
+            if(!Resp.object(resp)){ return false; }
+            // 
+            if(resp.type==='success'){
+                el.countValue.innerHTML = resp.data.toLocaleString('en-US');
+            }else{
+                el.countValue.innerHTML = '<div class="ts-icon is-question-icon"></div>';
+            }
+        });
+    }; 
 </script>
 
 <?php  Inc::component('footer'); ?>
