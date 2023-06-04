@@ -112,7 +112,6 @@
         el.message.innerHTML = '生成中... ';
         // 
         isSubmitting(true);
-        console.log(url);
         // info
         info.type = null;
         info.title = 'Info';
