@@ -47,7 +47,7 @@ if(Url::isBlackDomain($domain)){
         true,
         true,
         '我堅持前往可能不安全的連結！',
-        '我已詳閱且同意以上規範',
+        '<span class="ts-text is-negative">我已詳閱且同意以上規範</span>',
         htmlentities($url)
     );
 }
@@ -91,13 +91,33 @@ header('Location: '.$url);
         <?php if($button){ ?>
             <div class="ts-divider"></div>
             <div class="ts-content is-tertiary">
-                <button class="ts-button is-fluid" onclick="
-                    <?php if($check){ ?>
-                        window.location.replace(document.querySelector('input#isChecked').checked ? '<?=($btnLink)?>' : '#!')
-                    <?php }else{ ?>
-                        window.location.replace(<?=$btnLink?>)
-                    <?php } ?>
-                "><?=($btnText)?></button>
+                <div class="ts-grid">
+                    <div class="column is-6-wide"><a class="ts-button" href="<?=htmlentities(Root)?>">回首頁</a></div>
+                    <div class="column is-10-wide">
+                        <button class="ts-button is-fluid<?=($check?' is-negative is-outlined':'')?>" onclick="
+                            <?php if($check){ ?>
+                                window.location.replace(document.querySelector('input#isChecked').checked ? '<?=($btnLink)?>' : '#!'); 
+                                if(!document.querySelector('input#isChecked').checked){
+                                    Swal.fire({
+                                        position: 'bottom-start',
+                                        icon: 'warning',
+                                        title: '您尚未同意上述規範',
+                                        toast: true,
+                                        showConfirmButton: false,
+                                        timer: 6400,
+                                        timerProgressBar: true,
+                                        didOpen: (toast) => {
+                                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                        }
+                                    });
+                                }
+                            <?php }else{ ?>
+                                window.location.replace(<?=$btnLink?>)
+                            <?php } ?>
+                        "><?=($btnText)?></button>
+                    </div>
+                </div>
             </div>
         <?php } ?>
 
