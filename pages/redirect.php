@@ -39,15 +39,9 @@ $domain = trim($info[2]);
 if(Url::isBlackDomain($domain)){
     respond(
         '注意！正在前往的疑似是<span class="ts-text is-heavy is-large is-negative">惡意連結</span>！', 
-        '系統偵測到本短網址所導向的疑似為惡意連結：
-        <div class="ts-row is-compact is-evenly-divided is-start-aligned">
-            <div class="column">「</div>
-            <div class="column" style="max-width: 85%;">
-                <span class="ts-text is-truncated is-bold is-negative">'.htmlentities($url).'</span>
-            </div>
-            <div class="column">」</div>
-        </div>
-        <br>
+        '系統偵測到本短網址所導向的疑似為惡意連結：<br>
+        「<span class="ts-text is-bold is-negative">'.htmlentities($url).'</span>」
+        <br><br>
         在本服務之<a class="ts-text is-link is-external-link" href="'.htmlentities(Uri::page('terms/')).'" target="_blank">服務條款</a>中提到「<span class="ts-text is-key">本服務僅提供短網址轉換的功能，我們對使用者將該短網址轉換至的目標網站或資源的合法性、安全性或真實性不負任何責任</span>」。<br><br>
         並且您同意「<span class="ts-text is-key">我們不對因您使用本服務或無法使用本服務而導致的任何直接、間接、特殊或衍生的損失或損害負責</span>」。',
         true,
