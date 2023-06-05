@@ -9,7 +9,7 @@ class Router{
     static function init(){
         self::$uri = is_null(self::$uri) ? substr($_SERVER['SCRIPT_NAME'], strlen(Root) - 1) : self::$uri;
         self::$path = ltrim(self::uri(), '/\\');
-        self::$root = Root;
+        self::$root = '';
         // self::$local = Local;
     }
 
