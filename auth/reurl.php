@@ -62,7 +62,7 @@ if ($port !== '') {
 $protocol = empty($protocol) ? 'https://' : strtolower($protocol);
 $domain = strtolower($domain);
 $port = $port ? $port : '';
-$uri = $uri==='' ? '' : $uri;
+$uri = $uri==='' ? '/' : $uri;
 $url = $protocol.$domain.($port===''?'':':'.$port).$uri;
 
 // domain not exist
