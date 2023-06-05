@@ -65,7 +65,7 @@
                     <div class="ts-notice is-outlined is-dense ts-segment is-positive is-top-indicated">
                         <div class="ts-header is-start-icon is-heavy"><span class="ts-icon is-user-lock-icon"></span> 隱私保護</div>
                         <div class="title">3.1</div>
-                        <div class="content">您同意我們根據我們的隱私政策處理您的個人資料。請閱讀並瞭解我們的<a class="ts-text is-link is-external-link" href="<?=htmlentities(Uri::page('terms/privacy'))?>" target="_blank">隱私政策</a>，以瞭解我們如何處理和保護您的資料。</div><br>
+                        <div class="content">您同意我們根據我們的隱私政策處理您的個人資料。請閱讀並瞭解我們的<a class="ts-text is-link is-external-link" href="<?=htmlentities(Uri::page('terms/privacy/'))?>" target="_blank">隱私政策</a>，以瞭解我們如何處理和保護您的資料。</div><br>
                         <div class="title">3.2</div>
                         <div class="content">您同意我們可以根據法律要求或合法權限，將您的個人資料提供給相關當局或第三方。</div><br>
                     </div>

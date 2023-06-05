@@ -2,7 +2,7 @@
 Router::new(Path::page.'terms/');
 
 Router::equal('/', function () { Router::view('index'); });
-Router::equal('index/', function () { die('asd'); Router::redirect('/'); });
+Router::equal(['index', 'index/'], function () { Router::redirect('/'); });
 
 Router::view();
 
