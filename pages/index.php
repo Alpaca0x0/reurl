@@ -29,7 +29,7 @@
 
     <div class="ts-wrap">
         <span>相關連結：</span>
-        <a class="ts-text is-undecorated" href="<?=htmlentities(Uri::page('terms/'))?>" target="_blank">
+        <a class="ts-text is-undecorated" href="<?=htmlentities(Uri::page('terms/'))?>">
             <span class="ts-icon is-scroll-icon"></span> 服務條款
         </a>
         <a class="ts-text is-undecorated" href="https://github.com/Alpaca0x0/reurl/" target="_blank">
