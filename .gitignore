@@ -2,3 +2,5 @@
 /configs/db.php
 /.docker/mysql
 /pages/lab.php
+/src/black-domains/**/*.txt
+/src/black-domains/**/*.bak
