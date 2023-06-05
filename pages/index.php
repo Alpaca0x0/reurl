@@ -163,6 +163,8 @@
                     el.message.innerHTML += '：<span class="ts-text is-heavy is-large is-negative">' + resp.data + '</span>';
                 }else if(resp.status === 'port_out_range'){
                     el.message.innerHTML += '：<span class="ts-text is-heavy is-large is-negative">' + resp.data + '</span>';
+                }else if(resp.status === 'black_domain'){
+                    el.message.innerHTML += '：<span class="ts-text is-heavy is-large is-negative">' + resp.data + '</span>';
                 }
             }
         }).always((resp) => {
