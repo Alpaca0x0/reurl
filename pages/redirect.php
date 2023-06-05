@@ -92,8 +92,12 @@ header('Location: '.$url);
             <div class="ts-divider"></div>
             <div class="ts-content is-tertiary">
                 <div class="ts-grid">
-                    <div class="column is-6-wide"><a class="ts-button" href="<?=htmlentities(Root)?>">回首頁</a></div>
-                    <div class="column is-10-wide">
+                    <?php if($check){ ?>
+                        <div class="column is-6-wide"><a class="ts-button" href="<?=htmlentities(Root)?>">回首頁</a></div>
+                        <div class="column is-10-wide">
+                    <?php }else{ ?>
+                        <div class="column is-16-wide">
+                    <?php } ?>
                         <button class="ts-button is-fluid<?=($check?' is-negative is-outlined':'')?>" onclick="
                             <?php if($check){ ?>
                                 window.location.replace(document.querySelector('input#isChecked').checked ? '<?=($btnLink)?>' : '#!'); 
@@ -113,7 +117,7 @@ header('Location: '.$url);
                                     });
                                 }
                             <?php }else{ ?>
-                                window.location.replace(<?=$btnLink?>)
+                                window.location.replace('<?=$btnLink?>')
                             <?php } ?>
                         "><?=($btnText)?></button>
                     </div>
