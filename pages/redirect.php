@@ -95,7 +95,7 @@ header('Location: '.$url);
                     <?php if($check){ ?>
                         window.location.replace(document.querySelector('input#isChecked').checked ? '<?=($btnLink)?>' : '#!')
                     <?php }else{ ?>
-                        <?=('window.location.replace='.$btnLink)?>
+                        window.location.replace(<?=$btnLink?>)
                     <?php } ?>
                 "><?=($btnText)?></button>
             </div>
