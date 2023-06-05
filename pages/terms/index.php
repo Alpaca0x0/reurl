@@ -20,10 +20,11 @@
             一旦使用本服務，即表示您同意遵守以下條款及規章。
         </div>
         <div class="ts-image">
-            <img src="<?=htmlentities(Uri::img('terms.png'))?>">
+            <img src="<?=htmlentities(Uri::img('terms/index.png'))?>">
         </div>
         <div class="ts-content is-padded is-center-aligned">
-            歡迎使用我們的短網址服務！在使用本服務之前，請詳細閱讀以下使用條款。<br>
+            歡迎使用我們的短網址服務！<br>
+            在使用本服務之前，請詳細閱讀以下使用條款。<br>
             這些使用條款將規範您與本短網址服務之間的關係，並確保我們的服務運作順利且安全。
             <div class="ts-space is-large"></div>
             <div class="ts-divider is-section"></div>
@@ -64,7 +65,7 @@
                     <div class="ts-notice is-outlined is-dense ts-segment is-positive is-top-indicated">
                         <div class="ts-header is-start-icon is-heavy"><span class="ts-icon is-user-lock-icon"></span> 隱私保護</div>
                         <div class="title">3.1</div>
-                        <div class="content">您同意我們根據我們的隱私政策處理您的個人資料。請閱讀並瞭解我們的隱私政策，以瞭解我們如何處理和保護您的資料。</div><br>
+                        <div class="content">您同意我們根據我們的隱私政策處理您的個人資料。請閱讀並瞭解我們的<a class="ts-text is-link is-external-link" href="<?=htmlentities(Uri::page('terms/privacy'))?>" target="_blank">隱私政策</a>，以瞭解我們如何處理和保護您的資料。</div><br>
                         <div class="title">3.2</div>
                         <div class="content">您同意我們可以根據法律要求或合法權限，將您的個人資料提供給相關當局或第三方。</div><br>
                     </div>
@@ -90,7 +91,7 @@
             <div class="ts-row">
                 <div class="column is-fluid is-start-aligned">
                     <div class="ts-notice is-outlined is-dense ts-segment is-positive is-top-indicated">
-                        <div class="ts-header is-start-icon is-heavy"><span class="ts-icon is-ban-icon"></span> 服務變更和終止</div>
+                        <div class="ts-header is-start-icon is-heavy"><span class="ts-icon is-pencil-icon"></span> 服務變更和終止</div>
                         <div class="title">5.1</div>
                         <div class="content">我們保留隨時修改、暫停或終止本服務的權利，並無需提前通知。</div><br>
                     </div>
@@ -106,5 +107,7 @@
         </div>
     </div>
 </div>
+
+<script>document.title="服務條款"</script>
 
 <?php Inc::component('footer'); ?>

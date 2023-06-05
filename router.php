@@ -28,6 +28,8 @@ Router::init();
 Router::get(['img/', 'js/', 'css/', 'plugin/'], 'asset', Router::path());
 Router::get('auth/', 'auth');
 Router::get('api/', 'api');
+Router::get('terms/', 'terms');
+
 Router::get('/', 'page', Router::path());
 
 http_response_code(404);
