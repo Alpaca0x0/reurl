@@ -9,6 +9,10 @@ class File{
         $filepath = self::$path.ltrim($filename,'/');
         return is_file($filepath) ? $filepath : false;
     }
+    static function existDir($dirname){
+        $dirpath = self::$path.ltrim($dirname,'/');
+        return is_dir($dirpath) ? $dirpath : false;
+    }
     static function try($filename='', $extensions=['', '.php', '/index.php', '/index.html']){
         foreach($extensions as $extension){
             $filepath = self::exist(rtrim($filename, '/').$extension);
