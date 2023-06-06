@@ -45,7 +45,8 @@ else if($type === 'ipv4'){
 }
 
 // check if in black list
-if(Url::isBlackDomain($domain)){ Resp::warning('black_domain', $domain, '恕拒絕服務，偵測到惡意網域'); }
+$blackedDomain = Url::isBlackDomain($domain);
+if($blackedDomain){ Resp::warning('black_domain', $blackedDomain, '恕拒絕服務，偵測到惡意網域'); }
 
 Inc::clas('db');
 DB::connect() or Resp::error('db_connet', '資料庫連接失敗');
