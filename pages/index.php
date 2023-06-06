@@ -120,6 +120,7 @@
         if(isSubmitting()){ return; }
         el.newUrl.innerHTML = '';
         el.message.innerHTML = '生成中... ';
+        el.copyBtn.style.display = 'none';
         // 
         isSubmitting(true);
         // info
@@ -158,7 +159,6 @@
                 el.copyBtn.style.display = "inline";
             }else{
                 el.message.innerHTML = resp.message;
-                el.copyBtn.style.display = 'none';
                 if(resp.status === 'domain_may_not_exists'){
                     el.message.innerHTML += '：<span class="ts-text is-heavy is-large is-negative">' + resp.data + '</span>';
                 }else if(resp.status === 'port_out_range'){
