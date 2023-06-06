@@ -8,11 +8,15 @@ class Url{
         '(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.' .
         '(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))' .
         '(?::(\d{1,5}))?((?:\/\S*)?)$/i';
+
         if(!preg_match($regex, $url, $matches)) { return false; }
         $protocol = strtolower($matches[1]);
         $domain = $matches[2];
         $port = isset($matches[3]) ? $matches[3] : '';
         $uri = isset($matches[4]) ? $matches[4] : '';
+        
+        if (!filter_var($domain, FILTER_VALIDATE_IP)){ return false; }
+
         return ['ipv4', $protocol, $domain, $port, $uri];
     }
 
