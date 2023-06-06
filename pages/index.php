@@ -43,10 +43,19 @@
         </span>
     </div>
 
-    <div id="Resp" class="ts-snackbar animate__animated animate__faster animate__fadeIn">
-        <div id="message" class="content">貼上網址後 Enter 即可縮網址！</div>
-        <div id="newUrl" class="content"></div>
-        <button id="copy" class="action" style="display: none">複製</button>
+    <div id="Resp" class="ts-segment is-very-elevated is-collapsed is-left-indicated animate__animated animate__faster animate__fadeIn">
+        <div class="ts-row">
+            <div class="column is-fluid">
+                <span id="message" class="content">貼上網址後 Enter 即可縮網址！</span>
+                <span id="newUrl" class="content"></span>
+            </div>
+            <div class="column">
+                <label id="copy" class="ts-chip is-circular is-dense is-small is-input" style="display: none">
+                    <input type="checkbox">
+                    <div class="content"><b>Copy</b><span class="ts-icon is-copy-icon"></span></div>
+                </label>
+            </div>
+        </div>
     </div>
     <div class="ts-space is-large"></div>
 </div>
@@ -75,9 +84,9 @@
     el.clear = el.form.querySelector('button#clear');
 
     el.resp = document.querySelector('div#Resp');
-    el.message = el.resp.querySelector('div#message');
-    el.newUrl = el.resp.querySelector('div#newUrl');
-    el.copyBtn = el.resp.querySelector('button#copy');
+    el.message = el.resp.querySelector('span#message');
+    el.newUrl = el.resp.querySelector('span#newUrl');
+    el.copyBtn = el.resp.querySelector('label#copy');
 
     el.count = document.querySelector('div#Count');
     el.countValue = el.count.querySelector('span#value');
@@ -92,7 +101,9 @@
         getCountTotal();
     });
     el.clear.addEventListener('click', () => { el.originUrl.value = ''; });
-    el.copyBtn.addEventListener('click', () => {
+    el.copyBtn.addEventListener('click', (event) => {
+        el.copyBtn.querySelector('input').checked = true;
+        el.copyBtn.querySelector('div.content b').innerHTML = 'Copied';
         navigator.clipboard.writeText(newUrl)
         .then(() => {
             Swal.fire({
@@ -121,15 +132,17 @@
         el.newUrl.innerHTML = '';
         el.message.innerHTML = '生成中... ';
         el.copyBtn.style.display = 'none';
+        el.copyBtn.querySelector('input').checked = false;
         // 
         isSubmitting(true);
         // info
         info.type = null;
         info.title = 'Info';
+        info.data = null;
         info.msg = 'Submitting... Please wait...';
 
         // animation
-        el.resp.classList.remove('animate__pulse');
+        el.resp.classList.remove('animate__pulse', 'is-negative', 'is-positive', 'is-warning');
         
         // request
         $.ajax({
@@ -143,32 +156,37 @@
             info.msg = 'Unexpected Error';
         }).fail((xhr, status, error) => {
             console.error(xhr.responseText);
+            el.resp.classList.add("is-negative");
         }).done((resp) => {
             console.log(resp);
             if(!Resp.object(resp)){ return false; }
             info.type = resp.type;
             info.title = resp.type[0].toUpperCase() + resp.type.slice(1);
+            info.data = resp.data;
             info.msg = resp.message;
-            // 
-            if(resp.type==='success'){
+        }).always((resp) => {
+            if(info.type==='success'){
                 getCountTotal();
                 newUrl = `${protocol}://${domain}${root}${resp.data}`;
                 el.originUrl.value = '';
                 el.message.innerHTML = "短網址：";
                 el.newUrl.innerHTML = `<a class="ts-text is-link is-external-link" href="${newUrl}" target="_blank">${newUrl}</a>`;
                 el.copyBtn.style.display = "inline";
+                el.resp.classList.add("is-positive");
             }else{
+                if(info.type==='warning'){ el.resp.classList.add("is-warning"); }
+                else if(resp.type==='warning'){ el.resp.classList.add("is-negative"); }
                 el.message.innerHTML = resp.message;
-                if(resp.status === 'domain_may_not_exists'){
-                    el.message.innerHTML += '：<span class="ts-text is-heavy is-large is-negative">' + resp.data + '</span>';
+                if(info.status === 'domain_may_not_exists'){
+                    el.message.innerHTML += '：<span class="ts-text is-heavy is-large is-negative">' + info.data + '</span>';
                 }else if(resp.status === 'port_out_range'){
-                    el.message.innerHTML += '：<span class="ts-text is-heavy is-large is-negative">' + resp.data + '</span>';
+                    el.message.innerHTML += '：<span class="ts-text is-heavy is-large is-negative">' + info.data + '</span>';
                 }else if(resp.status === 'black_domain'){
-                    el.message.innerHTML += '：<span class="ts-text is-heavy is-large is-negative">' + resp.data + '</span>';
+                    el.message.innerHTML += '：<span class="ts-text is-heavy is-large is-negative">' + info.data + '</span>';
                 }
             }
-        }).always((resp) => {
             el.resp.classList.add("animate__pulse");
+            // 
             Swal.fire({
                 position: 'bottom-start',
                 icon: info.type,
