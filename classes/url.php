@@ -2,6 +2,25 @@
 class Url{
     static function isPort($port){ return !($port < 1 || $port > 65535); }
     
+    static function isPrivateIpv4($ip) {
+        $privateIPs = array(
+            '10.0.0.0|10.255.255.255',      // Class A私人IP
+            '172.16.0.0|172.31.255.255',    // Class B私人IP
+            '192.168.0.0|192.168.255.255',  // Class C私人IP
+            '169.254.0.0|169.254.255.255',  // 非公網IP
+            '127.0.0.0|127.255.255.255',    // Loopback IP
+            '0.0.0.0|0.255.255.255'         // 保留IP
+        );
+        $ip = ip2long($ip);
+        if ($ip !== false) {
+            foreach ($privateIPs as $range) {
+                list($start, $end) = explode('|', $range);
+                if ($ip >= ip2long($start) && $ip <= ip2long($end)) { return true; }
+            }
+        }
+        return false;
+    }
+
     static function isIpv4Url($url){
         $regex = '/^(https?:\/\/)?((?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.' .
         '(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.' .

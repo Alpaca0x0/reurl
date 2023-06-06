@@ -39,6 +39,10 @@ if($type === 'common'){
     $isAvailableDomain = checkdnsrr($domain, 'A');
     if(!$isAvailableDomain){ Resp::warning('domain_may_not_exists', $domain, '無法被偵測到 A 紀錄的網域'); }
 }
+// ipv4 is private
+else if($type === 'ipv4'){
+    if(Url::isPrivateIpv4($domain)){ Resp::warning('private_ipv4', $domain, '這不是一個公開的 IPv4 位址'); }
+}
 
 // check if in black list
 if(Url::isBlackDomain($domain)){ Resp::warning('black_domain', $domain, '恕拒絕服務，偵測到惡意網域'); }
