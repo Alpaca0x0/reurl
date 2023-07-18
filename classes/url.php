@@ -69,14 +69,15 @@ class Url{
     static function isBlackDomain($domain){
         $domain = trim($domain, './ ');
         $partsDir = Path::config.'black-domains/parts/';
-        $partFile = explode('.', $domain);
-        $partFile = trim(end($partFile), './ ').'.txt';
+        $topDomain = trim(end(explode('.', $domain)), '/. ');
+        $partFile = $topDomain.'.txt';
         // 
         if(File::in('/')::existDir($partsDir) && File::in($partsDir)::exist($partFile)){
             $fs = fopen($partsDir.$partFile, 'r');
             if($fs){
                 while(($line = fgets($fs)) !== false) {
                     $line = trim($line, " \n\t./");
+					$line = $line.'.'.$topDomain;
                     if($domain === $line || str_ends_with($domain, '.'.$line)) {
                         return $line;
                         break;
