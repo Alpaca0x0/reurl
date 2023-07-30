@@ -1,6 +1,6 @@
 /config.php
 /configs/db.php
 /.docker/mysql
-/pages/lab.php
-/configs/black-domains/**/*.txt
-/configs/black-domains/**/*.bak
+/configs/blocked-domains/**/*.txt
+/configs/blocked-domains/**/*.bak
+/.docker/.env

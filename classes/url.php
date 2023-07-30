@@ -68,11 +68,12 @@ class Url{
 
     static function isBlackDomain($domain){
         $domain = trim($domain, './ ');
-        $partsDir = Path::config.'black-domains/parts/';
+        $partsDir = Path::config.'blocked-domains/parts/';
+        if(!File::in('/')::existDir($partsDir)){ return false; }
+        // 
         $topDomain = trim(end(explode('.', $domain)), '/. ');
         $partFile = $topDomain.'.txt';
-        // 
-        if(File::in('/')::existDir($partsDir) && File::in($partsDir)::exist($partFile)){
+        if(File::in($partsDir)::exist($partFile)){
             $fs = fopen($partsDir.$partFile, 'r');
             if($fs){
                 while(($line = fgets($fs)) !== false) {
@@ -86,6 +87,6 @@ class Url{
                 fclose($fs);
                 return false;
             }else{ return null; }
-        }
+        }else{ return null; }
     }
 }
