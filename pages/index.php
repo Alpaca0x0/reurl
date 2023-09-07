@@ -173,6 +173,7 @@
                 el.newUrl.innerHTML = `<a class="ts-text is-link is-external-link" href="${newUrl}" target="_blank">${newUrl}</a>`;
                 el.copyBtn.style.display = "inline";
                 el.resp.classList.add("is-positive");
+                el.copyBtn.querySelector('div.content b').innerHTML = 'Copy';
             }else{
                 if(info.type==='warning'){ el.resp.classList.add("is-warning"); }
                 else if(resp.type==='warning'){ el.resp.classList.add("is-negative"); }
