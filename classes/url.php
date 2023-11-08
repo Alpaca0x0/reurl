@@ -71,7 +71,8 @@ class Url{
         $partsDir = Path::config.'blocked-domains/parts/';
         if(!File::in('/')::existDir($partsDir)){ return false; }
         // 
-        $topDomain = trim(end(explode('.', $domain)), '/. ');
+	$tmp = explode('.', $domain);
+        $topDomain = trim(end($tmp), '/. ');
         $partFile = $topDomain.'.txt';
         if(File::in($partsDir)::exist($partFile)){
             $fs = fopen($partsDir.$partFile, 'r');
